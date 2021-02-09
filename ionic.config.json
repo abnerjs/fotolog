@@ -1,0 +1,7 @@
+{
+  "name": "fotolog",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
