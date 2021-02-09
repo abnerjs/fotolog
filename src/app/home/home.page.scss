@@ -25,3 +25,14 @@
 #container a {
   text-decoration: none;
 }
+.fix {
+ 
+  bottom: 14px;
+
+  cursor: pointer;
+ 
+  position: fixed;
+ 
+  z-index: 3;
+
+}
