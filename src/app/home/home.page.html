@@ -1,16 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Enviar Fotos
+      Bem-vindo, {{user.nome}}!
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
- 
+  <ion-button (click)="logout()">Sair</ion-button>
   <form [formGroup]="form" (ngSubmit)="sendPost()">
     <ion-item>
-      <ion-label >Mensagem: </ion-label>
+      <ion-label>Mensagem: </ion-label>
       <ion-input formControlName="message"></ion-input>
     </ion-item>
     <ion-grid>
@@ -23,37 +23,57 @@
 
 
     <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-      <ion-fab-button class="fix"  (click)="addPhotoToGallery()">
+      <ion-fab-button class="fix" (click)="addPhotoToGallery()">
         <ion-icon name="camera"></ion-icon>
       </ion-fab-button>
     </ion-fab>
 
-    <ion-button expand="full" type="submit">Send</ion-button>
+    <ion-button expand="full" type="submit">Enviar</ion-button>
+    <ion-button expand="full" (click)="novoUser()">Cadastrar Usuario</ion-button>
   </form>
   <!--<ion-button expand="full" (click)="buscar()">Listar</ion-button>-->
 
   <div>
     <ion-card *ngFor="let p of posts">
-      <ion-card-header>
-        <ion-card-title class="titulo">{{p.message}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content class="conteudo_card">
-        <ng-container *ngIf="p.autorizacao == true">
-          <p>Situação: AUTORIZADO</p>
-        </ng-container>
-        <ng-container *ngIf="p.autorizacao == false">
-          <p>Situação: NÃO AUTORIZADO</p>
-        </ng-container>
-        <ng-container *ngIf="p.autorizacao == null">
-          <p>Situação: NÃO AUTORIZADO</p>
-        </ng-container>
-        <ng-container>
-          <p>Data: {{p.data.substr(0,10)}}</p>
-        </ng-container>
-      </ion-card-content>
-      <ion-card *ngFor="let k of p.images">
-        <img [src]="k.url" />
-      </ion-card>
+      <div *ngIf="user.tipo=='adm'">
+        <ion-card-header>
+          <ion-card-title class="titulo">{{p.message}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="conteudo_card">
+
+          <p *ngIf="p.autorizacao == true">AVISO AUTORIZADO</p>
+          <p *ngIf="p.autorizacao != true">AVISO NÃO AUTORIZADO</p>
+          <p *ngIf="p.user != null">Enviado por: {{p.user.nome}}</p>
+
+          <ng-container>
+            <p>Data: {{p.data.substr(0,10)}}</p>
+          </ng-container>
+          <ion-button *ngIf="user.tipo=='adm' && p.autorizacao!=true" expand="full" (click)="autoriza(p.id)">AUTORIZAR
+          </ion-button>
+        </ion-card-content>
+        <ion-card *ngFor="let k of p.images">
+          <img [src]="k.url" />
+        </ion-card>
+      </div>
+      <div *ngIf="user.tipo!='adm' && p.autorizacao==true">
+        <ion-card-header>
+          <ion-card-title class="titulo">{{p.message}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="conteudo_card">
+
+         
+          <p *ngIf="p.user != null">Enviado por: {{p.user.nome}}</p>
+
+          <ng-container>
+            <p>Data: {{p.data.substr(0,10)}}</p>
+          </ng-container>
+          <ion-button *ngIf="user.tipo=='adm' && p.autorizacao!=true" expand="full" (click)="autoriza(p.id)">AUTORIZAR
+          </ion-button>
+        </ion-card-content>
+        <ion-card *ngFor="let k of p.images">
+          <img [src]="k.url" />
+        </ion-card>
+      </div>
     </ion-card>
   </div>
 </ion-content>
