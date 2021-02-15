@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+
 // tslint:disable-next-line: class-name
-export class createImage1613408484362 implements MigrationInterface {
+export class createPost1613409120858 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'image',
+        name: 'post',
         columns: [
           {
             name: 'id',
@@ -15,23 +16,8 @@ export class createImage1613408484362 implements MigrationInterface {
             generationStrategy: 'increment',
           },
           {
-            name: 'path',
+            name: 'message',
             type: 'varchar',
-          },
-          {
-            name: 'post_id',
-            type: 'integer',
-            unsigned: true,
-          },
-        ],
-        foreignKeys: [
-          {
-            name: 'post_image_fk',
-            columnNames: ['post_id'],
-            referencedTableName: 'post',
-            referencedColumnNames: ['id'],
-            onUpdate: 'CASCADE',
-            onDelete: 'CASCADE',
           },
         ],
       })
@@ -39,6 +25,6 @@ export class createImage1613408484362 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('image');
+    await queryRunner.dropTable('post');
   }
 }
