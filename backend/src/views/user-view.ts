@@ -10,7 +10,6 @@ export default {
       login: user.login,
       tipo: user.tipo,
     };
-    0;
   },
   renderMany(users: User[]) {
     console.log(users);

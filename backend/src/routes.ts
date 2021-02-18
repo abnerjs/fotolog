@@ -14,7 +14,7 @@ routes.post('/users/:nome/:login/:senha/:tipo', UserController.create);
 routes.get('/users/:id', UserController.findById);
 //routes.get("/users", authentication.validate, UserController.index);
 routes.get('/users', UserController.index);
-//routes.get("/users/:login/:senha", UserController.logar);
+//routes.get("/users/:login/:senha", UserController.login);
 
 routes.get('/posts', PostController.index);
 routes.get('/posts/:id', PostController.show);
